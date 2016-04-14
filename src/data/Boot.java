@@ -1,23 +1,25 @@
 package data;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
+
+import static data.helpers.Artist.*;
 
 public class Boot
 {
     public Boot()
     {
-        Display.setTitle("2DTowerDefense");
-        try
+        BeginSesion();
+
+        while(!Display.isCloseRequested())
         {
-            Display.setDisplayMode(new DisplayMode(600, 400));
-            Display.create();
+            DrawQuad(50, 50, 100, 100);
+            DrawQuad(150, 150, 100, 100);
+
+            Display.update();
+            Display.sync(600);
         }
-        catch (LWJGLException e)
-        {
-            e.printStackTrace();
-        }
+
+        Display.destroy();
     }
 
     public static void main(String[] args)
