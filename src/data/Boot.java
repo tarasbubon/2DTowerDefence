@@ -2,21 +2,42 @@ package data;
 
 import org.lwjgl.opengl.Display;
 
-import static data.helpers.Artist.*;
+import static helpers.Artist.*;
 
 public class Boot
 {
     public Boot()
     {
-        BeginSesion();
+        beginSession();
+
+        int[][] map = {
+                {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 2, 2, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+                {0, 2, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+                {0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        };
+
+        TileGrid grid = new TileGrid(map);
+
+        //Test code
+        grid.setTile(2, 4, grid.getTile(2, 3).getType());
+        Enemy e = new Enemy(quickLoad("td2dEnmUFO64"), grid.getTile(10, 10), 64, 64, 2);
 
         while(!Display.isCloseRequested())
         {
-            DrawQuad(50, 50, 100, 100);
-            DrawQuad(150, 150, 100, 100);
+            grid.draw();
+            e.draw();
 
             Display.update();
-            Display.sync(600);
+            Display.sync(60);
         }
 
         Display.destroy();
