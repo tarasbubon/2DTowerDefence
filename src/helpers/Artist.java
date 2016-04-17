@@ -41,6 +41,13 @@ public class Artist
         glMatrixMode(GL_MODELVIEW);
         //If enabled and no fragment shader is active, two-dimensional texturing is performed
         glEnable(GL_TEXTURE_2D);
+        //If enabled, blend the computed fragment color values with the values in the color buffers
+        glEnable(GL_BLEND);
+        //In RGBA mode, pixels can be drawn using a function that blends the incoming (source)
+        // RGBA values with the RGBA values that are already in the frame buffer (the destination values).
+        // Blending is initially disabled. Use glEnable and glDisable with argument GL_BLEND to enable and disable blending.
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     }
 
     public static void drawQuad(float x, float y, float width, float height)

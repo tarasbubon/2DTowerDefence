@@ -1,5 +1,6 @@
 package data;
 
+import helpers.Clock;
 import org.lwjgl.opengl.Display;
 
 import static helpers.Artist.*;
@@ -29,12 +30,17 @@ public class Boot
 
         //Test code
         grid.setTile(2, 4, grid.getTile(2, 3).getType());
-        Enemy e = new Enemy(quickLoad("td2dEnmUFO64"), grid.getTile(10, 10), 64, 64, 2);
+        Enemy e = new Enemy(quickLoad("td2dEnmUFO64"), grid.getTile(10, 10), 64, 64, 6);
+        Wave wave = new Wave(20, e);
+        Player player = new Player(grid);
 
         while(!Display.isCloseRequested())
         {
+            Clock.update();
+
             grid.draw();
-            e.draw();
+            wave.update();
+            player.update();
 
             Display.update();
             Display.sync(60);
