@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Artist
 {
-    public static final int WIDTH = 1024, HEIGHT = 768;
+    public static final int WIDTH = 640, HEIGHT = 480;
 
     public static void beginSession()
     {

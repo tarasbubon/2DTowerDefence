@@ -23,7 +23,7 @@ public class Player
 
     public void setTile()
     {
-        grid.setTile((int)Math.floor(Mouse.getX() / 64), (int)Math.floor((HEIGHT - Mouse.getY() - 1) / 64), types[index]);
+        grid.setTile((int)Math.floor(Mouse.getX() / 32), (int)Math.floor((HEIGHT - Mouse.getY() - 1) / 32), types[index]);
     }
 
     public void update()
