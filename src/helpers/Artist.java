@@ -78,6 +78,26 @@ public class Artist
         glLoadIdentity();
     }
 
+    public static void drawQuadTexRot(Texture texture, float x, float y, float width, float height, float angle)
+    {
+        texture.bind();
+        //Multiply the current matrix by a translation matrix
+        glTranslatef(x + width / 2, y + height / 2, 0);
+        glRotatef(angle, 0, 0, 1);
+        glTranslatef(-width / 2, -height / 2, 0);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0);
+        glVertex2f(0, 0);
+        glTexCoord2f(1, 0);
+        glVertex2f(width, 0);
+        glTexCoord2f(1, 1);
+        glVertex2f(width, height);
+        glTexCoord2f(0, 1);
+        glVertex2f(0, height);
+        glEnd();
+        glLoadIdentity();
+    }
+
     public static Texture loadTexture(String path, String fileType)
     {
         Texture texture = null;

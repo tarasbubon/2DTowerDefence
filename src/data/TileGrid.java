@@ -3,6 +3,7 @@ package data;
 public class TileGrid
 {
     public Tile[][] map;
+    private int tileWide, tileHigh;
 
     public TileGrid()
     {
@@ -18,7 +19,9 @@ public class TileGrid
 
     public TileGrid(int[][] newMap)
     {
-        map = new Tile[20][15];
+        this.tileWide = newMap[0].length;
+        this.tileHigh = newMap.length;
+        map = new Tile[tileWide][tileHigh];
         for(int i = 0; i < map.length; i++)
         {
             for(int j = 0; j < map[i].length; j++)
@@ -46,7 +49,14 @@ public class TileGrid
 
     public Tile getTile(int xPlace, int yPlace)
     {
-        return map[xPlace][yPlace];
+        if(xPlace < tileWide && yPlace < tileHigh && xPlace > -1 && yPlace > -1)
+        {
+            return map[xPlace][yPlace];
+        }
+        else
+        {
+            return new Tile(0, 0, 0, 0, TileType.NULL);
+        }
     }
 
     public void draw()
@@ -58,5 +68,22 @@ public class TileGrid
                 map[i][j].draw();
             }
         }
+    }
+
+    //GETTERS AND SETTERS
+    public int getTileWide() {
+        return tileWide;
+    }
+
+    public void setTileWide(int tileWide) {
+        this.tileWide = tileWide;
+    }
+
+    public int getTileHigh() {
+        return tileHigh;
+    }
+
+    public void setTileHigh(int tileHigh) {
+        this.tileHigh = tileHigh;
     }
 }

@@ -13,7 +13,7 @@ public class Enemy
     private float speed, x, y;
     private Texture texture;
     private Tile startTile;
-    private boolean first = true;
+    private boolean first = true, alive = true;
     private TileGrid grid;
 
     private ArrayList<Checkpoint> checkpoints;
@@ -53,7 +53,7 @@ public class Enemy
             {
                 if(currentCheckpoint + 1 == checkpoints.size())
                 {
-                    System.out.println("Enemy Reached End of Maze");
+                    die();
                 }
                 else
                 {
@@ -116,7 +116,9 @@ public class Enemy
 
         while(!found)
         {
-            if(s.getType() != grid.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter).getType())
+            if(s.getXPlace() + dir[0] * counter == grid.getTileWide()
+                    || s.getYPlace() + dir[1] * counter == grid.getTileHigh()
+                    || s.getType() != grid.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter).getType())
             {
                 found = true;
                 //Move counter back 1 to find tile before new tile type
@@ -163,27 +165,15 @@ public class Enemy
         {
             dir[0] = 2;
             dir[1] = 2;
-            System.out.println("NO DIRECTIONS FOUNDS");
         }
 
         return dir;
     }
 
-    /*
-    private boolean pathContinues()
+    private void die()
     {
-        boolean answer = true;
-
-        Tile myTile = grid.getTile((int)(x / 32), (int)(y / 32));
-        Tile nextTile = grid.getTile((int)(x / 32) + 1, (int)(y / 32));
-
-        if(myTile.getType() != nextTile.getType())
-        {
-            answer = false;
-        }
-        return answer;
+        alive = false;
     }
-    */
 
     public void draw()
     {
@@ -269,5 +259,13 @@ public class Enemy
 
     public void setGrid(TileGrid grid) {
         this.grid = grid;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }

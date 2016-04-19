@@ -10,9 +10,9 @@ public class Wave
     private Enemy enemyType;
     private ArrayList<Enemy> enemyList;
 
-    public Wave(float spawnTime, Enemy enemType)
+    public Wave(float spawnTime, Enemy enemyType)
     {
-        this.enemyType = enemType;
+        this.enemyType = enemyType;
         this.spawnTime = spawnTime;
         timeSinceLastSpawn = 0;
         enemyList = new ArrayList<>();
@@ -29,8 +29,11 @@ public class Wave
 
         for(Enemy e : enemyList)
         {
-            e.update();
-            e.draw();
+            if(e.isAlive())
+            {
+                e.update();
+                e.draw();
+            }
         }
     }
 
