@@ -2,18 +2,24 @@ package data;
 
 import org.newdawn.slick.opengl.Texture;
 
+import java.util.ArrayList;
+
 import static helpers.Artist.*;
 import static helpers.Clock.*;
 
 public class Enemy
 {
-    private int width, height, health;
+    private int width, height, health, currentCheckpoint;
     private float speed, x, y;
     private Texture texture;
     private Tile startTile;
     private boolean first = true;
+    private TileGrid grid;
 
-    public Enemy(Texture texture, Tile startTile, int width, int height, float speed)
+    private ArrayList<Checkpoint> checkpoints;
+    private int[] directions;
+
+    public Enemy(Texture texture, Tile startTile, TileGrid grid, int width, int height, float speed)
     {
         this.texture = texture;
         this.startTile = startTile;
@@ -22,6 +28,17 @@ public class Enemy
         this.width = width;
         this.height = height;
         this.speed = speed;
+        this.grid = grid;
+
+        this.checkpoints = new ArrayList<>();
+        this.directions = new int[2];
+        //X direction
+        this.directions[0] = 0;
+        //Y direction
+        this.directions[1] = 0;
+        directions = findNextD(startTile);
+        this.currentCheckpoint = 0;
+        populateCheckpointList();
     }
 
     public void update()
@@ -32,9 +49,134 @@ public class Enemy
         }
         else
         {
-            x += delta() * speed;
+            if(checkpointReached())
+            {
+                currentCheckpoint++;
+            }
+            else
+            {
+                x += delta() * checkpoints.get(currentCheckpoint).getxDirection() * speed;
+                y += delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed;
+            }
         }
     }
+
+    private boolean checkpointReached()
+    {
+        boolean reached = false;
+        Tile t = checkpoints.get(currentCheckpoint).getTile();
+        //Check if position reached tile within variance of 3 (arbitrary)
+        if(x > t.getX() - 3 && x < t.getX() + 3 && y > t.getY() - 3 && y < t.getY() + 3)
+        {
+            reached = true;
+            x = t.getX();
+            y = t.getY();
+        }
+        return reached;
+    }
+
+    private void populateCheckpointList()
+    {
+        checkpoints.add(findNextC(startTile, directions = findNextD(startTile)));
+
+        int counter = 0;
+        boolean cont = true;
+        while(cont)
+        {
+            int[] currentD = findNextD(checkpoints.get(counter).getTile());
+            //Check if a next direction/checkpoint exists, end after 20 checkpoints (arbitrary)
+            if(currentD[0] == 2 || counter == 20)
+            {
+                cont = false;
+            }
+            else
+            {
+                checkpoints.add(findNextC(checkpoints.get(counter).getTile(), directions = findNextD(checkpoints.get(counter).getTile())));
+            }
+            counter++;
+        }
+    }
+
+    private Checkpoint findNextC(Tile s, int[] dir)
+    {
+        Tile next = null;
+        Checkpoint c = null;
+
+        //Boolean to decide if next checkpoint is found
+        boolean found = false;
+        //Boolean to increment each loop
+        int counter = 1;
+
+        while(!found)
+        {
+            if(s.getType() != grid.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter).getType())
+            {
+                found = true;
+                //Move counter back 1 to find tile before new tile type
+                counter -= 1;
+                next = grid.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter);
+            }
+            counter++;
+        }
+        c = new Checkpoint(next, dir[0], dir[1]);
+
+        return c;
+    }
+
+    private int[] findNextD(Tile s)
+    {
+        int[] dir = new int[2];
+
+        Tile u = grid.getTile(s.getXPlace(), s.getYPlace() - 1);
+        Tile r = grid.getTile(s.getXPlace() + 1, s.getYPlace());
+        Tile d = grid.getTile(s.getXPlace(), s.getYPlace() + 1);
+        Tile l = grid.getTile(s.getXPlace() - 1, s.getYPlace());
+
+        if(s.getType() == u.getType())
+        {
+            dir[0] = 0;
+            dir[1] = -1;
+        }
+        else if(s.getType() == r.getType())
+        {
+            dir[0] = 1;
+            dir[1] = 0;
+        }
+        else if(s.getType() == d.getType())
+        {
+            dir[0] = 0;
+            dir[1] = 1;
+        }
+        else if(s.getType() == l.getType())
+        {
+            dir[0] = -1;
+            dir[1] = 0;
+        }
+        else
+        {
+            dir[0] = 2;
+            dir[1] = 2;
+            System.out.println("NO DIRECTIONS FOUNDS");
+        }
+
+        return dir;
+    }
+
+    /*
+    private boolean pathContinues()
+    {
+        boolean answer = true;
+
+        Tile myTile = grid.getTile((int)(x / 32), (int)(y / 32));
+        Tile nextTile = grid.getTile((int)(x / 32) + 1, (int)(y / 32));
+
+        if(myTile.getType() != nextTile.getType())
+        {
+            answer = false;
+        }
+        return answer;
+    }
+    */
 
     public void draw()
     {
@@ -112,5 +254,13 @@ public class Enemy
 
     public void setFirst(boolean first) {
         this.first = first;
+    }
+
+    public TileGrid getGrid() {
+        return grid;
+    }
+
+    public void setGrid(TileGrid grid) {
+        this.grid = grid;
     }
 }

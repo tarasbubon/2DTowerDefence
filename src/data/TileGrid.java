@@ -44,9 +44,9 @@ public class TileGrid
         map[xCoord][yCoord] = new Tile(xCoord * 32, yCoord * 32, 32, 32, type);
     }
 
-    public Tile getTile(int xCoord, int yCoord)
+    public Tile getTile(int xPlace, int yPlace)
     {
-        return map[xCoord][yCoord];
+        return map[xPlace][yPlace];
     }
 
     public void draw()
