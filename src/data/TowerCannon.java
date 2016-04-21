@@ -10,13 +10,15 @@ import static helpers.Clock.*;
 
 public class TowerCannon
 {
-    private float x, y, timeSinceLastShot, firingSpeed;
+    private float x, y, timeSinceLastShot, firingSpeed, angle;
     private int width, height, damage;
     private Texture baseTexture, cannonTexture;
     private Tile startTile;
     private ArrayList<Projectile> projectiles;
+    private ArrayList<Enemy> enemies;
+    private Enemy target;
 
-    public TowerCannon(Texture baseTexture, Tile startTile, int damage)
+    public TowerCannon(Texture baseTexture, Tile startTile, int damage, ArrayList<Enemy> enemies)
     {
         this.baseTexture = baseTexture;
         this.cannonTexture = quickLoad("cannonGun");
@@ -26,15 +28,29 @@ public class TowerCannon
         this.width = (int)startTile.getWidth();
         this.height = (int)startTile.getHeight();
         this.damage = damage;
-        this.firingSpeed = 30;
+        this.firingSpeed = 3;
         this.timeSinceLastShot = 0;
         this.projectiles = new ArrayList<>();
+        this.enemies = enemies;
+        this.target = acquireTarget();
+        this.angle = calculateAngle();
+    }
+
+    private Enemy acquireTarget()
+    {
+        return enemies.get(0);
+    }
+
+    private float calculateAngle()
+    {
+        double angleTemp = Math.atan2(target.getY() - y, target.getX() - x);
+        return (float)Math.toDegrees(angleTemp) - 90;
     }
 
     private void shoot()
     {
         timeSinceLastShot = 0;
-        projectiles.add(new Projectile(quickLoad("projectileOne"), x + 16, y + 16, 5, 10));
+        projectiles.add(new Projectile(quickLoad("projectileOne"), x + 16, y + 16, 50, 10));
     }
 
     public void update()
@@ -50,12 +66,13 @@ public class TowerCannon
             p.update();
         }
 
+        angle = calculateAngle();
         draw();
     }
 
     public void draw()
     {
         drawQuadTex(baseTexture, x, y, width, height);
-        drawQuadTexRot(cannonTexture, x, y, width, height, 70);
+        drawQuadTexRot(cannonTexture, x, y, width, height, angle);
     }
 }

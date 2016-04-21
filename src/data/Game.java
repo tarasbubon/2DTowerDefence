@@ -6,26 +6,19 @@ public class Game
 {
     private TileGrid grid;
     private Player player;
-    private Wave wave;
-
-    //Temporary variables
-    TowerCannon tower;
+    private WaveManager waveManager;
 
     public Game(int[][] map)
     {
         grid = new TileGrid(map);
-        player = new Player(grid);
-        wave = new Wave(20, new Enemy(quickLoad("td2dEnmUFO64"), grid.getTile(10, 8), grid, 32, 32, 3));
-
-        tower = new TowerCannon(quickLoad("cannonBase"), grid.getTile(13, 7), 10);
+        waveManager = new WaveManager(new Enemy(quickLoad("td2dEnmUFO64"), grid.getTile(10, 8), grid, 32, 32, 40), 2, 2);
+        player = new Player(grid, waveManager);
     }
 
     public void update()
     {
         grid.draw();
-        wave.update();
+        waveManager.update();
         player.update();
-
-        tower.update();
     }
 }
