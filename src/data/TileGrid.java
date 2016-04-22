@@ -7,6 +7,8 @@ public class TileGrid
 
     public TileGrid()
     {
+        this.tileWide = 20;
+        this.tileHigh = 15;
         map = new Tile[20][15];
         for(int i = 0; i < map.length; i++)
         {

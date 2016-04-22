@@ -1,9 +1,9 @@
 package data;
 
+import helpers.Clock;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import static helpers.Artist.*;
@@ -15,6 +15,7 @@ public class Player
     private int index;
     private WaveManager waveManager;
     private ArrayList<TowerCannon> towerList;
+    private boolean leftMouseButtonDown;
 
     public Player(TileGrid grid, WaveManager waveManager)
     {
@@ -26,11 +27,7 @@ public class Player
         this.index = 0;
         this.waveManager = waveManager;
         this.towerList = new ArrayList<>();
-    }
-
-    public void setTile()
-    {
-        grid.setTile((int)Math.floor(Mouse.getX() / 32), (int)Math.floor((HEIGHT - Mouse.getY() - 1) / 32), types[index]);
+        this.leftMouseButtonDown = false;
     }
 
     public void update()
@@ -41,31 +38,30 @@ public class Player
         }
 
         //Handle Mouse Input
-        if(Mouse.isButtonDown(0))
+        if(Mouse.isButtonDown(0) && !leftMouseButtonDown)
         {
-            setTile();
+            towerList.add(new TowerCannon(quickLoad("cannonBase"),
+                                          grid.getTile(Mouse.getX() / 32, (HEIGHT - Mouse.getY() - 1) / 32),
+                                          10,
+                                          waveManager.getCurrentWave().getEnemyList()));
         }
+        leftMouseButtonDown = Mouse.isButtonDown(0);
 
         //Handle Keyboard Input
         while(Keyboard.next())
         {
             if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT && Keyboard.getEventKeyState())
             {
-                moveIndex();
+                Clock.changeMultiplier(0.2f);
+            }
+            if(Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState())
+            {
+                Clock.changeMultiplier(-0.2f);
             }
             if(Keyboard.getEventKey() == Keyboard.KEY_T && Keyboard.getEventKeyState())
             {
                 towerList.add(new TowerCannon(quickLoad("cannonBase"), grid.getTile(13, 5), 10, waveManager.getCurrentWave().getEnemyList()));
             }
-        }
-    }
-
-    private void moveIndex()
-    {
-        index++;
-        if(index > types.length - 1)
-        {
-            index = 0;
         }
     }
 }
