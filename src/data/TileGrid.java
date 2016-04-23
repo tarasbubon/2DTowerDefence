@@ -1,5 +1,7 @@
 package data;
 
+import static helpers.Artist.TILE_SIZE;
+
 public class TileGrid
 {
     public Tile[][] map;
@@ -14,7 +16,7 @@ public class TileGrid
         {
             for(int j = 0; j < map[i].length; j++)
             {
-                map[i][j] = new Tile(i * 32, j * 32, 32, 32, TileType.Grass);
+                map[i][j] = new Tile(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, TileType.Grass);
             }
         }
     }
@@ -31,13 +33,13 @@ public class TileGrid
                 switch(newMap[j][i])
                 {
                     case 0:
-                        map[i][j] = new Tile(i * 32, j * 32, 32, 32, TileType.Grass);
+                        map[i][j] = new Tile(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, TileType.Grass);
                         break;
                     case 1:
-                        map[i][j] = new Tile(i * 32, j * 32, 32, 32, TileType.Dirt);
+                        map[i][j] = new Tile(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, TileType.Dirt);
                         break;
                     case 2:
-                        map[i][j] = new Tile(i * 32, j * 32, 32, 32, TileType.Water);
+                        map[i][j] = new Tile(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE, TileType.Water);
                         break;
                 }
             }
@@ -46,7 +48,7 @@ public class TileGrid
 
     public void setTile(int xCoord, int yCoord,TileType type)
     {
-        map[xCoord][yCoord] = new Tile(xCoord * 32, yCoord * 32, 32, 32, type);
+        map[xCoord][yCoord] = new Tile(xCoord * TILE_SIZE, yCoord * TILE_SIZE, TILE_SIZE, TILE_SIZE, type);
     }
 
     public Tile getTile(int xPlace, int yPlace)

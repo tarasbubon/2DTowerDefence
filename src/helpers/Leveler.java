@@ -39,7 +39,6 @@ public class Leveler
         {
             BufferedReader br = new BufferedReader(new FileReader(mapName));
             String data = br.readLine();
-            br.close();
             for(int i = 0; i < grid.getTileWide(); i++)
             {
                 for(int j = 0; j < grid.getTileHigh(); j++)
@@ -47,6 +46,7 @@ public class Leveler
                     grid.setTile(i, j, getTileTypeById(data.substring(i * grid.getTileHigh() + j, i * grid.getTileHigh() + j + 1)));
                 }
             }
+            br.close();
         }
         catch(Exception e)
         {

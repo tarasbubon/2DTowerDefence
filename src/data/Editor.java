@@ -1,6 +1,7 @@
 package data;
 
-import static helpers.Artist.*;
+import static helpers.Artist.HEIGHT;
+import static helpers.Artist.TILE_SIZE;
 import static helpers.Leveler.*;
 
 import org.lwjgl.input.Keyboard;
@@ -49,7 +50,7 @@ public class Editor
 
     private void setTile()
     {
-        grid.setTile((int) Math.floor(Mouse.getX() / 32), (int) Math.floor((HEIGHT - Mouse.getY() - 1) / 32), types[index]);
+        grid.setTile((int) Math.floor(Mouse.getX() / TILE_SIZE), (int) Math.floor((HEIGHT - Mouse.getY() - 1) / TILE_SIZE), types[index]);
     }
 
     private void moveIndex()

@@ -14,7 +14,7 @@ public class MainMenu
 
     public MainMenu()
     {
-        background = quickLoad("MainMenu");
+        background = QuickLoad("MainMenu");
         menuUI = new UI();
         menuUI.addButton("Play", "PlayButton", WIDTH / 2 - 64, (int)(HEIGHT * 0.45f));
         menuUI.addButton("Editor", "EditorButton", WIDTH / 2 - 64, (int)(HEIGHT * 0.55f));
@@ -42,7 +42,7 @@ public class MainMenu
 
     public void update()
     {
-        drawQuadTex(background, 0, 0, 1024, 512);
+        DrawQuadTex(background, 0, 0, 1024, 512);
         menuUI.draw();
         updateButtons();
     }

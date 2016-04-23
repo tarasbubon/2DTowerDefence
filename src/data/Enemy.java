@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import static helpers.Artist.*;
 import static helpers.Clock.*;
 
-public class Enemy
+public class Enemy implements Entity
 {
     private int width, height, health, currentCheckpoint;
     private float speed, x, y;
@@ -19,7 +19,7 @@ public class Enemy
     private ArrayList<Checkpoint> checkpoints;
     private int[] directions;
 
-    public Enemy(Texture texture, Tile startTile, TileGrid grid, int width, int height, float speed)
+    public Enemy(Texture texture, Tile startTile, TileGrid grid, int width, int height, float speed, int health)
     {
         this.texture = texture;
         this.startTile = startTile;
@@ -28,6 +28,7 @@ public class Enemy
         this.width = width;
         this.height = height;
         this.speed = speed;
+        this.health = health;
         this.grid = grid;
 
         this.checkpoints = new ArrayList<>();
@@ -73,7 +74,10 @@ public class Enemy
         boolean reached = false;
         Tile t = checkpoints.get(currentCheckpoint).getTile();
         //Check if position reached tile within variance of 3 (arbitrary)
-        if(x > t.getX() - 3 && x < t.getX() + 3 && y > t.getY() - 3 && y < t.getY() + 3)
+        if(x > t.getX() - 3 &&
+           x < t.getX() + 3 &&
+           y > t.getY() - 3 &&
+           y < t.getY() + 3)
         {
             reached = true;
             x = t.getX();
@@ -85,7 +89,6 @@ public class Enemy
     private void populateCheckpointList()
     {
         checkpoints.add(findNextC(startTile, directions = findNextD(startTile)));
-
         int counter = 0;
         boolean cont = true;
         while(cont)
@@ -98,7 +101,8 @@ public class Enemy
             }
             else
             {
-                checkpoints.add(findNextC(checkpoints.get(counter).getTile(), directions = findNextD(checkpoints.get(counter).getTile())));
+                checkpoints.add(findNextC(checkpoints.get(counter).getTile(),
+                                          directions = findNextD(checkpoints.get(counter).getTile())));
             }
             counter++;
         }
@@ -116,9 +120,9 @@ public class Enemy
 
         while(!found)
         {
-            if(s.getXPlace() + dir[0] * counter == grid.getTileWide()
-                    || s.getYPlace() + dir[1] * counter == grid.getTileHigh()
-                    || s.getType() != grid.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter).getType())
+            if(s.getXPlace() + dir[0] * counter == grid.getTileWide() ||
+                    s.getYPlace() + dir[1] * counter == grid.getTileHigh() ||
+                    s.getType() != grid.getTile(s.getXPlace() + dir[0] * counter, s.getYPlace() + dir[1] * counter).getType())
             {
                 found = true;
                 //Move counter back 1 to find tile before new tile type
@@ -170,6 +174,15 @@ public class Enemy
         return dir;
     }
 
+    public void damage(int amount)
+    {
+        health -= amount;
+        if(health <= 0)
+        {
+            die();
+        }
+    }
+
     private void die()
     {
         alive = false;
@@ -177,7 +190,7 @@ public class Enemy
 
     public void draw()
     {
-        drawQuadTex(texture, x, y, width, height);
+        DrawQuadTex(texture, x, y, width, height);
     }
 
     //GETTERS AND SETTERS

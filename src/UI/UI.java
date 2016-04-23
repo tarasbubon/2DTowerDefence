@@ -17,7 +17,7 @@ public class UI
 
     public void addButton(String name, String texture, int x, int y)
     {
-        buttonList.add(new Button(name, quickLoad(texture), x, y));
+        buttonList.add(new Button(name, QuickLoad(texture), x, y));
     }
 
     public boolean isButtonClicked(String buttonName)
@@ -50,7 +50,7 @@ public class UI
     {
         for(Button b : buttonList)
         {
-            drawQuadTex(b.getTexture(), b.getX(), b.getY(), b.getWidth(), b.getHeight());
+            DrawQuadTex(b.getTexture(), b.getX(), b.getY(), b.getWidth(), b.getHeight());
         }
     }
 }

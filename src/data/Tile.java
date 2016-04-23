@@ -17,12 +17,12 @@ public class Tile
         this.width = width;
         this.height = height;
         this.type = type;
-        this.texture = quickLoad(this.type.textureName);
+        this.texture = QuickLoad(this.type.textureName);
     }
 
     public void draw()
     {
-        drawQuadTex(texture, x, y, width, height);
+        DrawQuadTex(texture, x, y, width, height);
     }
 
     //GETTERS AND SETTERS
@@ -32,7 +32,7 @@ public class Tile
 
     public int getXPlace()
     {
-        return (int) x / 32;
+        return (int) x / TILE_SIZE;
     }
 
     public void setX(float x) {
@@ -45,7 +45,7 @@ public class Tile
 
     public int getYPlace()
     {
-        return (int) y / 32;
+        return (int) y / TILE_SIZE;
     }
 
     public void setY(float y) {

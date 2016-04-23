@@ -14,9 +14,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Artist
 {
-    public static final int WIDTH = 640, HEIGHT = 480;
+    public static final int WIDTH = 640, HEIGHT = 480, TILE_SIZE = 32;
 
-    public static void beginSession()
+    public static void BeginSession()
     {
         Display.setTitle("2D Tower Defense");
         try
@@ -50,7 +50,18 @@ public class Artist
 
     }
 
-    public static void drawQuad(float x, float y, float width, float height)
+    public static boolean CheckCollision(float x1, float y1, float width1, float height1,
+                                         float x2, float y2, float width2, float height2)
+    {
+        if(x1 + width1 > x2 && x1 < x2 + width2 && y1 + height1 > y2 && y1 < y2 + height2)
+        {
+            return true;
+        }
+        return false;
+
+    }
+
+    public static void DrawQuad(float x, float y, float width, float height)
     {
         glBegin(GL_QUADS);
         glVertex2f(x, y); //Top left corner
@@ -60,7 +71,7 @@ public class Artist
         glEnd();
     }
 
-    public static void drawQuadTex(Texture texture, float x, float y, float width, float height)
+    public static void DrawQuadTex(Texture texture, float x, float y, float width, float height)
     {
         texture.bind();
         //Multiply the current matrix by a translation matrix
@@ -78,7 +89,7 @@ public class Artist
         glLoadIdentity();
     }
 
-    public static void drawQuadTexRot(Texture texture, float x, float y, float width, float height, float angle)
+    public static void DrawQuadTexRot(Texture texture, float x, float y, float width, float height, float angle)
     {
         texture.bind();
         //Multiply the current matrix by a translation matrix
@@ -98,7 +109,7 @@ public class Artist
         glLoadIdentity();
     }
 
-    public static Texture loadTexture(String path, String fileType)
+    public static Texture LoadTexture(String path, String fileType)
     {
         Texture texture = null;
         InputStream in = ResourceLoader.getResourceAsStream(path);
@@ -113,10 +124,10 @@ public class Artist
         return texture;
     }
 
-    public static Texture quickLoad(String name)
+    public static Texture QuickLoad(String name)
     {
         Texture texture = null;
-        texture = loadTexture("res/" + name + ".png", "PNG");
+        texture = LoadTexture("res/" + name + ".png", "PNG");
         return texture;
     }
 }

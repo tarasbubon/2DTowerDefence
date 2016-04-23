@@ -10,18 +10,15 @@ public class Boot
 {
     public Boot()
     {
-        beginSession();
+        BeginSession();
 
         while(!Display.isCloseRequested())
         {
             Clock.update();
-            
             StateManager.update();
-
             Display.update();
             Display.sync(60);
         }
-
         Display.destroy();
     }
 
