@@ -82,7 +82,7 @@ public class TowerCannon
     private void shoot()
     {
         timeSinceLastShot = 0;
-        projectiles.add(new Projectile(QuickLoad("projectileOne"),
+        projectiles.add(new ProjectileIceball(QuickLoad("projectileOne"),
                                        target,
                                        x + TILE_SIZE / 2 - TILE_SIZE / 4,
                                        y + TILE_SIZE / 2 - TILE_SIZE / 4,

@@ -5,7 +5,7 @@ import org.newdawn.slick.opengl.Texture;
 import static helpers.Clock.*;
 import static helpers.Artist.*;
 
-public class Projectile implements Entity
+public abstract class Projectile implements Entity
 {
     private Texture texture;
     private float x, y, speed, xVelocity, yVelocity;
@@ -48,6 +48,12 @@ public class Projectile implements Entity
         }
     }
 
+    public void damage()
+    {
+        target.damage(damage);
+        alive = false;
+    }
+
     public void update()
     {
         if(alive)
@@ -56,8 +62,7 @@ public class Projectile implements Entity
             y += yVelocity * speed * delta();
             if (CheckCollision(x, y, width, height, target.getX(), target.getY(), target.getWidth(), target.getHeight()))
             {
-                target.damage(damage);
-                alive = false;
+                damage();
             }
             draw();
         }
@@ -99,5 +104,23 @@ public class Projectile implements Entity
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public Enemy getTarget()
+    {
+        return target;
+    }
+
+    public void setTarget(Enemy target)
+    {
+        this.target = target;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }

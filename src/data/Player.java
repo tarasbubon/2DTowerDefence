@@ -13,8 +13,8 @@ public class Player
     private TileGrid grid;
     private TileType[] types;
     private WaveManager waveManager;
-    private ArrayList<TowerCannon> towerList;
-    private boolean leftMouseButtonDown;
+    private ArrayList<Tower> towerList;
+    private boolean leftMouseButtonDown, rightMouseButton;
 
     public Player(TileGrid grid, WaveManager waveManager)
     {
@@ -26,26 +26,33 @@ public class Player
         this.waveManager = waveManager;
         this.towerList = new ArrayList<>();
         this.leftMouseButtonDown = false;
+        this.rightMouseButton = false;
     }
 
     public void update()
     {
-        for(TowerCannon t : towerList)
+        for(Tower t : towerList)
         {
             t.update();
+            t.draw();
             t.updateEnemyList(waveManager.getCurrentWave().getEnemyList());
         }
 
         //Handle Mouse Input
         if(Mouse.isButtonDown(0) && !leftMouseButtonDown)
         {
-            towerList.add(new TowerCannon(QuickLoad("cannonBase"),
-                                          grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE),
-                                          10,
-                                          1000,
-                                          waveManager.getCurrentWave().getEnemyList()));
+            towerList.add(new TowerCannonBlue(grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE),
+                          waveManager.getCurrentWave().getEnemyList()));
         }
         leftMouseButtonDown = Mouse.isButtonDown(0);
+
+        if(Mouse.isButtonDown(1) && !rightMouseButton)
+        {
+            towerList.add(new TowerIce(grid.getTile(Mouse.getX() / TILE_SIZE, (HEIGHT - Mouse.getY() - 1) / TILE_SIZE),
+                    waveManager.getCurrentWave().getEnemyList()));
+        }
+        rightMouseButton = Mouse.isButtonDown(1);
+
 
         //Handle Keyboard Input
         while(Keyboard.next())
@@ -57,10 +64,6 @@ public class Player
             if(Keyboard.getEventKey() == Keyboard.KEY_LEFT && Keyboard.getEventKeyState())
             {
                 Clock.changeMultiplier(-0.2f);
-            }
-            if(Keyboard.getEventKey() == Keyboard.KEY_T && Keyboard.getEventKeyState())
-            {
-                towerList.add(new TowerCannon(QuickLoad("cannonBase"), grid.getTile(13, 5), 10, 1000, waveManager.getCurrentWave().getEnemyList()));
             }
         }
     }

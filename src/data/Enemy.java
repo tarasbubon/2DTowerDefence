@@ -9,9 +9,9 @@ import static helpers.Clock.*;
 
 public class Enemy implements Entity
 {
-    private int width, height, health, currentCheckpoint;
-    private float speed, x, y;
-    private Texture texture;
+    private int width, height, currentCheckpoint;
+    private float speed, x, y, health, startHealth;
+    private Texture texture, healthBackground, healthForeground, healthBorder;
     private Tile startTile;
     private boolean first = true, alive = true;
     private TileGrid grid;
@@ -19,9 +19,12 @@ public class Enemy implements Entity
     private ArrayList<Checkpoint> checkpoints;
     private int[] directions;
 
-    public Enemy(Texture texture, Tile startTile, TileGrid grid, int width, int height, float speed, int health)
+    public Enemy(Texture texture, Tile startTile, TileGrid grid, int width, int height, float speed, float health)
     {
         this.texture = texture;
+        this.healthBackground = QuickLoad("healthBackground");
+        this.healthForeground = QuickLoad("healthForeground");
+        this.healthBorder = QuickLoad("healthBorder");
         this.startTile = startTile;
         this.x = startTile.getX();
         this.y = startTile.getY();
@@ -29,8 +32,8 @@ public class Enemy implements Entity
         this.height = height;
         this.speed = speed;
         this.health = health;
+        this.startHealth = health;
         this.grid = grid;
-
         this.checkpoints = new ArrayList<>();
         this.directions = new int[2];
         //X direction
@@ -190,7 +193,11 @@ public class Enemy implements Entity
 
     public void draw()
     {
+        float healthPercentage = health / startHealth;
         DrawQuadTex(texture, x, y, width, height);
+        DrawQuadTex(healthBackground, x, y - TILE_SIZE / 8, width, TILE_SIZE / 8);
+        DrawQuadTex(healthForeground, x, y - TILE_SIZE / 8, TILE_SIZE * healthPercentage, TILE_SIZE / 8);
+        DrawQuadTex(healthBorder, x, y - TILE_SIZE / 8, width, TILE_SIZE / 8);
     }
 
     //GETTERS AND SETTERS
@@ -210,11 +217,11 @@ public class Enemy implements Entity
         this.height = height;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
     }
 
