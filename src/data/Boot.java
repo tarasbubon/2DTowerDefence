@@ -10,8 +10,10 @@ public class Boot
 {
     public Boot()
     {
+        //Call static method in Artist class to initialize OpenGL calls
         BeginSession();
 
+        //Main Game Loop
         while(!Display.isCloseRequested())
         {
             Clock.update();

@@ -17,7 +17,6 @@ public class Editor
     {
         grid = loadMap("newMap1");
         this.index = 0;
-
         this.types = new TileType[3];
         this.types[0] = TileType.Grass;
         this.types[1] = TileType.Dirt;
@@ -53,6 +52,7 @@ public class Editor
         grid.setTile((int) Math.floor(Mouse.getX() / TILE_SIZE), (int) Math.floor((HEIGHT - Mouse.getY() - 1) / TILE_SIZE), types[index]);
     }
 
+    //Allows editor to change which TileType is selected
     private void moveIndex()
     {
         index++;

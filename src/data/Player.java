@@ -32,6 +32,7 @@ public class Player
         Lives = 0;
     }
 
+    //Initialize Stats values for Player
     public void setup()
     {
         Cash = 200;
@@ -57,6 +58,7 @@ public class Player
 
     public void update()
     {
+        //Update all towers in the game
         for(Tower t : towerList)
         {
             t.update();
@@ -73,7 +75,6 @@ public class Player
                         waveManager.getCurrentWave().getEnemyList()));
             }
         }
-        leftMouseButtonDown = Mouse.isButtonDown(0);
 
         if(Mouse.isButtonDown(1) && !rightMouseButton)
         {
@@ -83,6 +84,7 @@ public class Player
                         waveManager.getCurrentWave().getEnemyList()));
             }
         }
+        leftMouseButtonDown = Mouse.isButtonDown(0);
         rightMouseButton = Mouse.isButtonDown(1);
 
 

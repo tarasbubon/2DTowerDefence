@@ -21,6 +21,7 @@ public class MainMenu
         menuUI.addButton("Quit", "QuitButton", WIDTH / 2 - 64, (int)(HEIGHT * 0.65f));
     }
 
+    //Check if button is clicked by the user, and if so do an action
     private void updateButtons()
     {
         if(Mouse.isButtonDown(0))

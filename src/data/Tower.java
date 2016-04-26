@@ -11,7 +11,7 @@ import static helpers.Clock.delta;
 public abstract class Tower implements Entity
 {
     private float x, y, timeSinceLastShot, firingSpeed, angle;
-    private int width, height, damage, range;
+    private int width, height, range;
     private Enemy target;
     private Texture[] textures;
     private CopyOnWriteArrayList<Enemy> enemies;
@@ -23,7 +23,6 @@ public abstract class Tower implements Entity
     {
         this.type = type;
         this.textures = type.textures;
-        this.damage = type.damage;
         this.range = type.range;
         this.x = startTile.getX();
         this.y = startTile.getY();
@@ -40,7 +39,9 @@ public abstract class Tower implements Entity
     private Enemy acquireTarget()
     {
         Enemy closest = null;
+        //Arbitrary distance (larger than map), to help with sorting Enemy distances
         float closestDistance = 10000;
+        //Go through each Enemy if 'enemies' and return nearest one
         for(Enemy e : enemies)
         {
             if(isInRange(e) && findDistance(e) < closestDistance && e.isAlive())
@@ -49,6 +50,7 @@ public abstract class Tower implements Entity
                 closest = e;
             }
         }
+        //If an Enemy exists and is returned, targeted == true
         if(closest != null)
         {
             targeted = true;
@@ -80,6 +82,7 @@ public abstract class Tower implements Entity
         return (float)Math.toDegrees(angleTemp) - 90;
     }
 
+    //Abstract method of 'shoot', must be overridden in subclasses
     public abstract void shoot(Enemy target);
 
     public void updateEnemyList(CopyOnWriteArrayList<Enemy> newList)
