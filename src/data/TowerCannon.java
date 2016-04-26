@@ -3,6 +3,7 @@ package data;
 import org.newdawn.slick.opengl.Texture;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static helpers.Artist.*;
 import static helpers.Clock.*;
@@ -14,11 +15,11 @@ public class TowerCannon
     private Texture baseTexture, cannonTexture;
     private Tile startTile;
     private ArrayList<Projectile> projectiles;
-    private ArrayList<Enemy> enemies;
+    private CopyOnWriteArrayList<Enemy> enemies;
     private Enemy target;
     private boolean targeted;
 
-    public TowerCannon(Texture baseTexture, Tile startTile, int damage, int range, ArrayList<Enemy> enemies)
+    public TowerCannon(Texture baseTexture, Tile startTile, int damage, int range, CopyOnWriteArrayList<Enemy> enemies)
     {
         this.baseTexture = baseTexture;
         this.cannonTexture = QuickLoad("cannonGun");
@@ -82,6 +83,7 @@ public class TowerCannon
     private void shoot()
     {
         timeSinceLastShot = 0;
+        /*
         projectiles.add(new ProjectileIceball(QuickLoad("projectileOne"),
                                        target,
                                        x + TILE_SIZE / 2 - TILE_SIZE / 4,
@@ -90,9 +92,10 @@ public class TowerCannon
                                        16,
                                        600,
                                        10));
+        */
     }
 
-    public void updateEnemyList(ArrayList<Enemy> newList)
+    public void updateEnemyList(CopyOnWriteArrayList<Enemy> newList)
     {
         enemies = newList;
     }

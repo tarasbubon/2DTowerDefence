@@ -14,6 +14,7 @@ public class Game
         grid = new TileGrid(map);
         waveManager = new WaveManager(new Enemy(QuickLoad("td2dEnmUFO64"), grid.getTile(10, 8), grid, TILE_SIZE, TILE_SIZE, 40, 25), 2, 2);
         player = new Player(grid, waveManager);
+        player.setup();
     }
 
     public void update()
