@@ -2,9 +2,9 @@ package data;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class TowerIce extends Tower
+public class TowerCannonIce extends Tower
 {
-    public TowerIce(Tile startTile, CopyOnWriteArrayList<Enemy> enemies)
+    public TowerCannonIce(Tile startTile, CopyOnWriteArrayList<Enemy> enemies)
     {
         super(TowerType.CannonIce, startTile, enemies);
     }
