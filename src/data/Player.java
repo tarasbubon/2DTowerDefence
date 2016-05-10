@@ -42,6 +42,7 @@ public class Player
         Lives = 10;
     }
 
+    //Check if player can afford tower, if so: charge player tower cost
     public static boolean modifyCash(int amount)
     {
         if(Cash + amount >= 0)
@@ -106,15 +107,17 @@ public class Player
 
     private void placeTower()
     {
+        Tile currentTile = getMouseTile();
         if(holdingTower)
         {
-            if (modifyCash(-tempTower.getCost()))
+            if(!currentTile.isOccupied() && modifyCash(-tempTower.getCost()))
             {
                 towerList.add(tempTower);
+                currentTile.setOccupied(true);
+                holdingTower = false;
+                tempTower = null;
             }
         }
-        holdingTower = false;
-        tempTower = null;
     }
 
     public void pickTower(Tower t)
