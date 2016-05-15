@@ -18,7 +18,7 @@ public class Game
     public Game(TileGrid grid)
     {
         this.grid = grid;
-        this.waveManager = new WaveManager(new Enemy(QuickLoad("td2dEnmUFO64"), grid.getTile(0, 1), grid, TILE_SIZE, TILE_SIZE, 40, 25), 2, 2);
+        this.waveManager = new WaveManager(new Enemy(QuickLoad("td2dEnmStar64"), grid.getTile(0, 1), grid, TILE_SIZE, TILE_SIZE, 40, 25), 2, 2);
         this.player = new Player(grid, waveManager);
         player.setup();
         setupUI();
@@ -27,8 +27,6 @@ public class Game
     private void setupUI()
     {
         gameUI = new UI();
-        //towerPickerUI.addButton("CannonBlue", "cannonBaseBlue", 0, 0);
-        //towerPickerUI.addButton("CannonIce", "cannonBaseIce", TILE_SIZE, 0);
         gameUI.createMenu("TowerPicker", 640, 50, 96, 480, 2, 0);
         towerPickerMenu = gameUI.getMenuByName("TowerPicker");
         towerPickerMenu.quickAdd("BlueCannon", "cannonBaseBlue");
