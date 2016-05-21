@@ -36,6 +36,8 @@ public class Game
     private void updateUI()
     {
         gameUI.draw();
+        gameUI.drawString(655, 200, "Lives: " + Player.Lives);
+        gameUI.drawString(655, 230, "Cash: " + Player.Cash);
 
         if(Mouse.next())
         {

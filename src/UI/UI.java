@@ -1,7 +1,9 @@
 package UI;
 
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.TrueTypeFont;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static helpers.Artist.*;
@@ -10,11 +12,20 @@ public class UI
 {
     private ArrayList<Button> buttonList;
     private ArrayList<Menu> menuList;
+    private TrueTypeFont font;
+    private Font awtFont;
 
     public UI()
     {
         buttonList = new ArrayList<>();
         menuList = new ArrayList<>();
+        awtFont = new Font("Times New Roman", Font.BOLD, 12);
+        font = new TrueTypeFont(awtFont, false);
+    }
+
+    public void drawString(int x, int y, String text)
+    {
+        font.drawString(x, y, text);
     }
 
     public void addButton(String name, String texture, int x, int y)
