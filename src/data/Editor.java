@@ -7,6 +7,7 @@ import UI.UI;
 import UI.UI.Menu;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.opengl.Texture;
 
 public class Editor
 {
@@ -15,6 +16,7 @@ public class Editor
     private TileType[] types;
     private UI editorUI;
     private Menu tilePickerMenu;
+    private Texture menuBackGround;
 
     public Editor()
     {
@@ -24,6 +26,7 @@ public class Editor
         this.types[0] = TileType.Grass;
         this.types[1] = TileType.Dirt;
         this.types[2] = TileType.Water;
+        this.menuBackGround = QuickLoad("menuBackgroundEditor");
         setupUI();
     }
 
@@ -82,8 +85,8 @@ public class Editor
 
     private void draw()
     {
+        DrawQuadTex(menuBackGround, 640, 0, 96, 480);
         grid.draw();
-        DrawQuadTex(QuickLoad("menuBackgroundEditor"), 640, 0, 96, 480);
         editorUI.draw();
     }
 

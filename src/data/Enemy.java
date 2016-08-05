@@ -110,7 +110,7 @@ public class Enemy implements Entity
         {
             int[] currentD = findNextD(checkpoints.get(counter).getTile());
             //Check if a next direction/checkpoint exists, end after 20 checkpoints (arbitrary)
-            if(currentD[0] == 2 || counter == 20)
+            if(currentD[0] == 2 || counter == 50)
             {
                 cont = false;
             }

@@ -5,7 +5,9 @@ import static helpers.Artist.QuickLoad;
 import static helpers.Artist.DrawQuadTex;
 import UI.UI;
 import UI.UI.Menu;
+import helpers.StateManager;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.opengl.Texture;
 
 public class Game
 {
@@ -14,6 +16,7 @@ public class Game
     private WaveManager waveManager;
     private UI gameUI;
     private Menu towerPickerMenu;
+    private Texture menuBackground;
 
     public Game(TileGrid grid)
     {
@@ -21,6 +24,7 @@ public class Game
         this.waveManager = new WaveManager(new Enemy(QuickLoad("td2dEnmStar64"), grid.getTile(0, 1), grid, TILE_SIZE, TILE_SIZE, 40, 25), 2, 2);
         this.player = new Player(grid, waveManager);
         player.setup();
+        this.menuBackground = QuickLoad("menuBackground2");
         setupUI();
     }
 
@@ -36,8 +40,10 @@ public class Game
     private void updateUI()
     {
         gameUI.draw();
-        gameUI.drawString(655, 200, "Lives: " + Player.Lives);
-        gameUI.drawString(655, 230, "Cash: " + Player.Cash);
+        gameUI.drawString(660, 350, "Lives: " + Player.Lives);
+        gameUI.drawString(660, 370, "Cash: " + Player.Cash);
+        gameUI.drawString(660, 280, "Wave: " + waveManager.getWaveNumber());
+        gameUI.drawString(0, 0, StateManager.framesInLastSecond + " fps");
 
         if(Mouse.next())
         {
@@ -58,7 +64,7 @@ public class Game
 
     public void update()
     {
-        DrawQuadTex(QuickLoad("menuBackground2"), 640, 0, 96, 480);
+        DrawQuadTex(menuBackground, 640, 0, 96, 480);
         grid.draw();
         waveManager.update();
         player.update();
