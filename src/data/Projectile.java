@@ -61,6 +61,7 @@ public abstract class Projectile implements Entity
     {
         if(alive)
         {
+            calculateDirection();
             x += xVelocity * speed * delta();
             y += yVelocity * speed * delta();
             if (CheckCollision(x, y, width, height, target.getX(), target.getY(), target.getWidth(), target.getHeight()))

@@ -12,7 +12,7 @@ public abstract class Tower implements Entity
 {
     private float x, y, timeSinceLastShot, firingSpeed, angle;
     private int width, height, range, cost;
-    private Enemy target;
+    public Enemy target;
     private Texture[] textures;
     private CopyOnWriteArrayList<Enemy> enemies;
     private boolean targeted;
@@ -45,7 +45,7 @@ public abstract class Tower implements Entity
         //Go through each Enemy if 'enemies' and return nearest one
         for(Enemy e : enemies)
         {
-            if(isInRange(e) && findDistance(e) < closestDistance && e.isAlive())
+            if(isInRange(e) && findDistance(e) < closestDistance && e.getHiddenHealth() > 0)
             {
                 closestDistance = findDistance(e);
                 closest = e;
@@ -93,7 +93,7 @@ public abstract class Tower implements Entity
 
     public void update()
     {
-        if(!targeted)
+        if(!targeted || target.getHiddenHealth() < 0)
         {
             target = acquireTarget();
         }

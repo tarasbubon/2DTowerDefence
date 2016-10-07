@@ -13,5 +13,6 @@ public class TowerCannonBlue extends Tower
     public void shoot(Enemy e)
     {
         super.projectiles.add(new ProjectileCannonball(super.type.projectileType, super.getTarget(), super.getX(), super.getY(), 16, 16));
+        super.target.reduceHiddenHealth(super.type.projectileType.damage);
     }
 }

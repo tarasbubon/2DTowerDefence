@@ -6,8 +6,8 @@ import static helpers.Artist.QuickLoad;
 
 public enum ProjectileType
 {
-    CannonBall(QuickLoad("projectileOne"), 10, 500),
-    Iceball(QuickLoad("projectileIceball"), 6, 450);
+    CannonBall(QuickLoad("projectileOne"), 10, 300),
+    Iceball(QuickLoad("projectileIceball"), 6, 225);
 
     Texture texture;
     int damage;

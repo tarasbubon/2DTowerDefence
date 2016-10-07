@@ -10,7 +10,7 @@ import static helpers.Clock.*;
 public class Enemy implements Entity
 {
     private int width, height, currentCheckpoint;
-    private float speed, x, y, health, startHealth;
+    private float speed, x, y, health, startHealth, hiddenHealth;
     private Texture texture, healthBackground, healthForeground, healthBorder;
     private Tile startTile;
     private boolean first, alive;
@@ -32,6 +32,7 @@ public class Enemy implements Entity
         this.speed = speed;
         this.health = health;
         this.startHealth = health;
+        this.hiddenHealth = health;
         this.grid = grid;
         this.first = true;
         this.alive = true;
@@ -215,7 +216,22 @@ public class Enemy implements Entity
         DrawQuadTex(healthBorder, x, y - TILE_SIZE / 8, width, TILE_SIZE / 8);
     }
 
+    public void reduceHiddenHealth(float amount)
+    {
+        hiddenHealth -= amount;
+    }
+
     //GETTERS AND SETTERS
+    public float getHiddenHealth()
+    {
+        return hiddenHealth;
+    }
+
+    public void setHiddenHealth(float hiddenHealth)
+    {
+        this.hiddenHealth = hiddenHealth;
+    }
+
     public int getWidth() {
         return width;
     }
