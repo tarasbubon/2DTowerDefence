@@ -17,11 +17,15 @@ public class Game
     private UI gameUI;
     private Menu towerPickerMenu;
     private Texture menuBackground;
+    private Enemy[] enemyTypes;
 
     public Game(TileGrid grid)
     {
         this.grid = grid;
-        this.waveManager = new WaveManager(new Enemy(QuickLoad("td2dEnmStar64"), grid.getTile(0, 1), grid, TILE_SIZE, TILE_SIZE, 40, 25), 2, 2);
+        this.enemyTypes = new Enemy[2];
+        this.enemyTypes[0] = new EnemyAlien(0, 1, grid);
+        this.enemyTypes[1] = new EnemyUFO(0, 1, grid);
+        this.waveManager = new WaveManager(enemyTypes, 3, 3);
         this.player = new Player(grid, waveManager);
         player.setup();
         this.menuBackground = QuickLoad("menuBackground2");

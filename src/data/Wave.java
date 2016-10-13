@@ -8,14 +8,14 @@ import static helpers.Artist.TILE_SIZE;
 public class Wave
 {
     private float timeSinceLastSpawn, spawnTime;
-    private Enemy enemyType;
+    private Enemy[] enemyTypes;
     private CopyOnWriteArrayList<Enemy> enemyList;
     private int enemiesPerWave, enemiesSpawned;
     private boolean waveCompleted;
 
-    public Wave(Enemy enemyType, float spawnTime, int enemiesPerWave)
+    public Wave(Enemy[] enemyTypes, float spawnTime, int enemiesPerWave)
     {
-        this.enemyType = enemyType;
+        this.enemyTypes = enemyTypes;
         this.spawnTime = spawnTime;
         this.enemiesPerWave = enemiesPerWave;
         this.enemiesSpawned = 0;
@@ -61,13 +61,13 @@ public class Wave
 
     private void spawn()
     {
-        enemyList.add(new Enemy(enemyType.getTexture(),
-                                enemyType.getStartTile(),
-                                enemyType.getGrid(),
+        enemyList.add(new Enemy(enemyTypes[0].getTexture(),
+                                enemyTypes[0].getStartTile(),
+                                enemyTypes[0].getGrid(),
                                 TILE_SIZE,
                                 TILE_SIZE,
-                                enemyType.getSpeed(),
-                                enemyType.getHealth()));
+                                enemyTypes[0].getSpeed(),
+                                enemyTypes[0].getHealth()));
         enemiesSpawned++;
     }
 
