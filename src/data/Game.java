@@ -22,9 +22,10 @@ public class Game
     public Game(TileGrid grid)
     {
         this.grid = grid;
-        this.enemyTypes = new Enemy[2];
+        this.enemyTypes = new Enemy[3];
         this.enemyTypes[0] = new EnemyAlien(0, 1, grid);
         this.enemyTypes[1] = new EnemyUFO(0, 1, grid);
+        this.enemyTypes[2] = new EnemyPlane(0, 1, grid);
         this.waveManager = new WaveManager(enemyTypes, 3, 3);
         this.player = new Player(grid, waveManager);
         player.setup();

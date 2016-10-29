@@ -319,6 +319,11 @@ public class Enemy implements Entity
         this.texture = texture;
     }
 
+    public void setTexture(String textureName)
+    {
+        this.texture = QuickLoad(textureName);
+    }
+
     public Tile getStartTile() {
         return startTile;
     }
